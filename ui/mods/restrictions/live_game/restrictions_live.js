@@ -3,14 +3,22 @@
 /// <reference path="../.vsdoc/knockout-2.2.1.debug.js" />
 
 var settings = decode(localStorage.settings);
-var restrictions = ["/pa/units/air/air_factory/air_factory.json","/pa/units/land/energy_plant/energy_plant.json"];
+var restrictions = ["/pa/units/land/tactical_missile_launcher/tactical_missile_launcher.json",
+                    "/pa/units/land/artillery_long/artillery_long.json",
+                    "/pa/units/land/artillery_short/artillery_short.json",
+                    "/pa/units/land/air_defense/air_defense.json",
+                    "/pa/units/land/laser_defense_adv/laser_defense_adv.json",
+                    "/pa/units/land/laser_defense/laser_defense.json",
+                    "/pa/units/land/laser_defense_single/laser_defense_single.json",
+                    "/pa/units/sea/torpedo_launcher/torpedo_launcher.json",
+                    "/pa/units/sea/torpedo_launcher_adv/torpedo_launcher_adv.json"
+                    ];
 
 function checkRestrictions(unitid)
 {
 	var result = true;
 	_.forEach(restrictions, function(restriction)
 	{
-	//debugger;
 	  if(restriction == unitid)
 	  {
 		
@@ -41,7 +49,6 @@ model.maybeSetBuildTarget = function (spec_id) {
 	engine.call("unit.debug.setSpecId", spec_id);
 
 	for (i = 0; i < list.length; i++){
-	    //debugger;
 	    if(checkRestrictions(spec_id))
 		{
 			if (list[i].id === spec_id) {
