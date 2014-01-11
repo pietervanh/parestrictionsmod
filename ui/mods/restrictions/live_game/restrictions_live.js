@@ -2,7 +2,6 @@
 /// <reference path="../.vsdoc/jquery-1.9.1-vsdoc.js" /> 
 /// <reference path="../.vsdoc/knockout-2.2.1.debug.js" />
 
-var settings = decode(localStorage.settings);
 var restrictions = ["/pa/units/land/tactical_missile_launcher/tactical_missile_launcher.json",
                     "/pa/units/land/artillery_long/artillery_long.json",
                     "/pa/units/land/artillery_short/artillery_short.json",
@@ -11,8 +10,7 @@ var restrictions = ["/pa/units/land/tactical_missile_launcher/tactical_missile_l
                     "/pa/units/land/laser_defense/laser_defense.json",
                     "/pa/units/land/laser_defense_single/laser_defense_single.json",
                     "/pa/units/sea/torpedo_launcher/torpedo_launcher.json",
-                    "/pa/units/sea/torpedo_launcher_adv/torpedo_launcher_adv.json"
-                    ];
+                    "/pa/units/sea/torpedo_launcher_adv/torpedo_launcher_adv.json"];
 
 function checkRestrictions(unitid)
 {

@@ -8,7 +8,7 @@
     "build": "58772",
     "date": "2014/01/11",
     "signature": "not yet implemented",
-    "forum": "https://forums.uberent.com/threads/rel-hotbuild2-57703.54561/",
+    "forum": "https://forums.uberent.com/threads/wip-client-restrictions-mod-for-gentlemen.55554/",
     "category": [
         "in-game",
         "ui"
@@ -24,5 +24,5 @@
     "new_game": [
         "coui://ui/mods/restrictions/new_game/restrictions_newgame.js"
     ],
-    "enabled": true
+    "enabled": false
 }
