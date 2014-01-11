@@ -33,3 +33,21 @@ $('.div_build_item').replaceWith(
 				'</div>'
 
 );
+
+model.maybeSetBuildTarget = function (spec_id) {
+	var list = (model.buildTabLists().length) ? model.buildTabLists()[0] : []; // first build tab is 'all'
+	var i;
+
+	engine.call("unit.debug.setSpecId", spec_id);
+
+	for (i = 0; i < list.length; i++){
+	    //debugger;
+	    if(checkRestrictions(spec_id))
+		{
+			if (list[i].id === spec_id) {
+				model.buildItemBySpec(spec_id);
+				return;
+			}
+		}
+	}
+}
