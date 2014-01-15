@@ -11,13 +11,15 @@ var restrictions_live = (function() {
 		});
 	};
 	
-	var restrictions = [];
+	
 	
 	var restrictions_live = {};
 	
+	restrictions_live.restrictions = ko.observableArray([]);
+	
 	restrictions_live.checkRestrictions = function(unitid){
 		var result = true;
-		_.forEach(restrictions, function(restriction){
+		_.forEach(restrictions, function(restrictions_live.restrictions()){
 		  if(restriction === unitid){
 			 result = false;
 			 return false;  
@@ -54,14 +56,15 @@ var restrictions_live = (function() {
         
         restrictions_live.addRestriction = function(){
         	//add rule should do something like this.	                    	
-        	restrictions = restrictions.concat(restrictionoptions.nodefence.rules);	
+        	restrictions = restrictions_live.restrictions().concat(restrictionoptions.nodefence.rules);	
         };
         
         restrictions_live.delRestriction = function(){
         	
         };
         
-	restrictions = restrictions.concat(restrictionoptions.nodefence.rules);
+        //test line should be removed
+	restrictions_live.restrictions = restrictions_live.restrictions().concat(restrictionoptions.nodefence.rules);
 	
 	
 	model.maybeSetBuildTarget = function (spec_id) {
@@ -71,7 +74,7 @@ var restrictions_live = (function() {
 		engine.call("unit.debug.setSpecId", spec_id);
 	
 		for (i = 0; i < list.length; i++){
-		    if(checkRestrictions(spec_id)){
+		    if(restrictions_live.checkRestrictions(spec_id)){
 				if (list[i].id ==== spec_id) {
 					model.buildItemBySpec(spec_id);
 					return;
