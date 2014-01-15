@@ -1,14 +1,12 @@
 <div id="restrictions_info" data-bind="with: restrictions_live">
-  <div id="bound_restrictions">
-  <!--knockoutfor op restrictions show name-->
+  <div data-bind="foreach: restrictions">
+    <div data-bind="text: name"></div>
   </div>
   <div id="restrictions_options">
-    <select id="selectRestrictions">
-     <option>no defence</option>
-    </select>
+    <select name="selectRestrictions" data-bind="options: restrictionoptions, value: selectedRestriction, optionsText:'name'"></select>
   </div>
   <div>
-  <!--Add Button -->
-  <!--Del Button -->
+      <button id="addRestriction" data-bind="click: addRestriction" type="submit">Activate</button>
+      <button id="delRestriction" data-bind="click: delRestriction" type="submit">De-Activate</button>
   </div>
 </div>

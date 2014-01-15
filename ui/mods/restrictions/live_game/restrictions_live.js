@@ -18,16 +18,23 @@ var restrictions_live = (function() {
 	restrictions_live.restrictions = ko.observableArray([]);
 	
 	restrictions_live.checkRestrictions = function(unitid){
-		var result = true;
-		_.forEach(restrictions, function(restrictions_live.restrictions()){
-		  if(restriction === unitid){
-			 result = false;
-			 return false;  
-		  }
+	    var result = true;
+	    //debugger;
+		_.forEach(restrictions_live.restrictions(), function (restrictionset) {
+		    _.forEach(restrictionset.rules, function (restriction) {
+		        if (restriction === unitid) {
+		            result = false;
+		            return false;
+		        }
+		    });
+		    if(!result)
+		    {
+		        return false;
+		    }
 		});
 		return result;
 	};
-	
+
 	//replace buildbar item
 	//prio must be higher than hotbuild 2 otherwise it keypreview will fail
 	$('.div_build_item').replaceWith(
@@ -41,8 +48,8 @@ var restrictions_live = (function() {
 	
 	);
 	
-	var restrictionoptions = {};
-	restrictionsoptions.nodefence = {'name':'No Defences','rules':["/pa/units/land/tactical_missile_launcher/tactical_missile_launcher.json",
+	restrictions_live.restrictionoptions = ko.observableArray([]);
+	var nodefence = {'name':'No Defences','rules':["/pa/units/land/tactical_missile_launcher/tactical_missile_launcher.json",
 	                    "/pa/units/land/artillery_long/artillery_long.json",
 	                    "/pa/units/land/artillery_short/artillery_short.json",
 	                    "/pa/units/land/air_defense/air_defense.json",
@@ -51,20 +58,29 @@ var restrictions_live = (function() {
 	                    "/pa/units/land/laser_defense_single/laser_defense_single.json",
 	                    "/pa/units/sea/torpedo_launcher/torpedo_launcher.json",
 	                    "/pa/units/sea/torpedo_launcher_adv/torpedo_launcher_adv.json"]};
-	restrictionsoptions.nonuke = {'name':'No Nuke','rules':[]};	                    
+	var nonuke = { 'name': 'No Nuke', 'rules': ["/pa/units/land/nuke_launcher/nuke_launcher.json", "/pa/units/land/anti_nuke_launcher/anti_nuke_launcher.json"] };
+
+	restrictions_live.selectedRestriction = ko.observable();
+	restrictions_live.restrictionoptions.push(nodefence);
+	restrictions_live.restrictionoptions.push(nonuke);
         
         
         restrictions_live.addRestriction = function(){
         	//add rule should do something like this.	                    	
-        	restrictions = restrictions_live.restrictions().concat(restrictionoptions.nodefence.rules);	
+            restrictions_live.restrictions(restrictions_live.restrictions().concat(restrictions_live.selectedRestriction()));
         };
         
-        restrictions_live.delRestriction = function(){
-        	
+        restrictions_live.delRestriction = function () {
+            restrictions_live.restrictions.remove(restrictions_live.selectedRestriction());
+            /*
+            _.forEach(restrictions_live.selectedRestriction().rules, function (rule) {
+                restrictions_live.restrictions.remove(rule);
+            });
+            */
         };
         
         //test line should be removed
-	restrictions_live.restrictions = restrictions_live.restrictions().concat(restrictionoptions.nodefence.rules);
+	//restrictions_live.restrictions(restrictions_live.restrictions().concat(restrictions_live.restrictionoptions()[0].rules));
 	
 	
 	model.maybeSetBuildTarget = function (spec_id) {
@@ -75,7 +91,7 @@ var restrictions_live = (function() {
 	
 		for (i = 0; i < list.length; i++){
 		    if(restrictions_live.checkRestrictions(spec_id)){
-				if (list[i].id ==== spec_id) {
+				if (list[i].id === spec_id) {
 					model.buildItemBySpec(spec_id);
 					return;
 				}
@@ -84,7 +100,7 @@ var restrictions_live = (function() {
 	}
 
 	createFloatingFrame('restrictions_info_frame', 220, 70, { 'offset': 'leftCenter', 'top': -250 });
-	loadHotBuildTemplate($('#restrictions_info_frame_content'), '../../mods/restrictions/live_game/restrictions_live.html', restrictions_live);
+	loadTemplate($('#restrictions_info_frame_content'), '../../mods/restrictions/live_game/restrictions_live.html', restrictions_live);
 	
 	
 	return restrictions_live;
