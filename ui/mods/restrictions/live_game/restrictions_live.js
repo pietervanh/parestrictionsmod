@@ -2,15 +2,16 @@
 /// <reference path="../.vsdoc/jquery-1.9.1-vsdoc.js" /> 
 /// <reference path="../.vsdoc/knockout-2.2.1.debug.js" />
 var restrictions_live = (function() {
-	var restrictions = ["/pa/units/land/tactical_missile_launcher/tactical_missile_launcher.json",
-	                    "/pa/units/land/artillery_long/artillery_long.json",
-	                    "/pa/units/land/artillery_short/artillery_short.json",
-	                    "/pa/units/land/air_defense/air_defense.json",
-	                    "/pa/units/land/laser_defense_adv/laser_defense_adv.json",
-	                    "/pa/units/land/laser_defense/laser_defense.json",
-	                    "/pa/units/land/laser_defense_single/laser_defense_single.json",
-	                    "/pa/units/sea/torpedo_launcher/torpedo_launcher.json",
-	                    "/pa/units/sea/torpedo_launcher_adv/torpedo_launcher_adv.json"];
+	
+	//load html dynamically
+	loadTemplate = function (element, url, model) {
+		element.load(url, function () {
+		    console.log("Loading html " + url);
+		    ko.applyBindings(model, element.get(0));
+		});
+	};
+	
+	var restrictions = [];
 	
 	var restrictions_live = {};
 	
@@ -38,6 +39,31 @@ var restrictions_live = (function() {
 	
 	);
 	
+	var restrictionoptions = {};
+	restrictionsoptions.nodefence = {'name':'No Defences','rules':["/pa/units/land/tactical_missile_launcher/tactical_missile_launcher.json",
+	                    "/pa/units/land/artillery_long/artillery_long.json",
+	                    "/pa/units/land/artillery_short/artillery_short.json",
+	                    "/pa/units/land/air_defense/air_defense.json",
+	                    "/pa/units/land/laser_defense_adv/laser_defense_adv.json",
+	                    "/pa/units/land/laser_defense/laser_defense.json",
+	                    "/pa/units/land/laser_defense_single/laser_defense_single.json",
+	                    "/pa/units/sea/torpedo_launcher/torpedo_launcher.json",
+	                    "/pa/units/sea/torpedo_launcher_adv/torpedo_launcher_adv.json"]};
+	restrictionsoptions.nonuke = {'name':'No Nuke','rules':[]};	                    
+        
+        
+        restrictions_live.addRestriction = function(){
+        	//add rule should do something like this.	                    	
+        	restrictions = restrictions.concat(restrictionoptions.nodefence.rules);	
+        };
+        
+        restrictions_live.delRestriction = function(){
+        	
+        };
+        
+	restrictions = restrictions.concat(restrictionoptions.nodefence.rules);
+	
+	
 	model.maybeSetBuildTarget = function (spec_id) {
 		var list = (model.buildTabLists().length) ? model.buildTabLists()[0] : []; // first build tab is 'all'
 		var i;
@@ -53,6 +79,10 @@ var restrictions_live = (function() {
 			}
 		}
 	}
+
+	createFloatingFrame('restrictions_info_frame', 220, 70, { 'offset': 'leftCenter', 'top': -250 });
+	loadHotBuildTemplate($('#restrictions_info_frame_content'), '../../mods/restrictions/live_game/restrictions_live.html', restrictions_live);
+	
 	
 	return restrictions_live;
 })();
