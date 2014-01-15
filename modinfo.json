@@ -24,5 +24,9 @@
     "new_game": [
         "coui://ui/mods/restrictions/new_game/restrictions_newgame.js"
     ],
+    "requires": [
+        "rFloatFrame",
+        "rSettingsManager"
+    ],    
     "enabled": false
 }
