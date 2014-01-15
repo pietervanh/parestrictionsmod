@@ -27,6 +27,6 @@
     "requires": [
         "rFloatFrame",
         "rSettingsManager"
-    ],    
-    "enabled": false
+    ],
+    "enabled": true
 }
